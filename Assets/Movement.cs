@@ -11,6 +11,9 @@ public class Movement : MonoBehaviour
     private float VerticalMove;
     public float speedMultiplier;
     public int lives;
+    private ParticleSystem HIGH_em;
+    private ParticleSystem MED_em;
+    private ParticleSystem LOW_em;
 
     // Use this for initialization
     void Start()
@@ -19,6 +22,11 @@ public class Movement : MonoBehaviour
         moveDirection = Vector3.zero;
         VerticalMove = Input.GetAxis("Vertical") * (1 / Mathf.Abs(Input.GetAxis("Vertical")));
         lives = 2;
+        HIGH_em = transform.GetChild(0).GetChild(0).transform.GetComponent<ParticleSystem>();
+        MED_em = transform.GetChild(0).GetChild(1).transform.GetComponent<ParticleSystem>();
+        LOW_em = transform.GetChild(0).GetChild(2).transform.GetComponent<ParticleSystem>();
+        HIGH_em.enableEmission = false;
+        LOW_em.enableEmission = false;
     }
 
     // Update is called once per frame
@@ -63,9 +71,15 @@ public class Movement : MonoBehaviour
                 break;
             case 1:
                 MapMovement.Instance.mapSpeed = MapMovement.Instance.initialSpeed / 2;
+                HIGH_em.enableEmission = false;
+                MED_em.enableEmission = false;
+                LOW_em.enableEmission = true;
                 break;
                 case 2:
                 MapMovement.Instance.mapSpeed = MapMovement.Instance.initialSpeed;
+                HIGH_em.enableEmission = false;
+                MED_em.enableEmission = true;
+                LOW_em.enableEmission = false;
                 break;
             default:
                 break;
@@ -82,6 +96,24 @@ public class Movement : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         lives ++;
+        actualLivesConsec();
+    }
+
+    public void activateTurbo()
+    {
+        MapMovement.Instance.mapSpeed = MapMovement.Instance.initialSpeed * 2;
+        HIGH_em.enableEmission = true;
+        MED_em.enableEmission = false;
+        LOW_em.enableEmission = false;
+
+        StopAllCoroutines();
+        StartCoroutine(stopTurbo(2.0f));
+    }
+
+    IEnumerator stopTurbo(float time)
+    {
+        yield return new WaitForSeconds(time);
+
         actualLivesConsec();
     }
 }
