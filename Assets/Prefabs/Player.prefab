@@ -21,12 +21,12 @@ GameObject:
   - component: {fileID: 4022357066474458}
   - component: {fileID: 33769330034191302}
   - component: {fileID: 23149120807441422}
-  - component: {fileID: 54611427227261536}
-  - component: {fileID: 65320804275831664}
   - component: {fileID: 114299376435947958}
+  - component: {fileID: 54345084164811294}
+  - component: {fileID: 65216386880662872}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1490623992044416}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -9, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -86,7 +86,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1490623992044416}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54611427227261536
+--- !u!54 &54345084164811294
 Rigidbody:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,7 +101,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
---- !u!65 &65320804275831664
+--- !u!65 &65216386880662872
 BoxCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,4 +124,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2370324017ea33c4587e48fbea6c07c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMultiplier: 100
+  speedMultiplier: 150
+  lives: 0

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -9,20 +10,22 @@ public class Movement : MonoBehaviour
     private Vector3 moveDirection;
     private float VerticalMove;
     public float speedMultiplier;
+    public int lives;
 
     // Use this for initialization
     void Start()
     {
         rb = this.gameObject.GetComponent<Rigidbody>();
         moveDirection = Vector3.zero;
-        VerticalMove = Input.GetAxis("Vertical") * (1 / Mathf.Abs(Input.GetAxis("Vertical"))); ;
-
+        VerticalMove = Input.GetAxis("Vertical") * (1 / Mathf.Abs(Input.GetAxis("Vertical")));
+        lives = 2;
     }
 
     // Update is called once per frame
     void Update()
     {
         AxisMovement();
+        Debug.Log(lives);
     }
 
     void AxisMovement()
@@ -51,8 +54,34 @@ public class Movement : MonoBehaviour
             VerticalMove = Input.GetAxis("Vertical") * (1 / Mathf.Abs(Input.GetAxis("Vertical")));
     }
 
+    public void actualLivesConsec()
+    {
+        switch(lives)
+        {
+            case 0:
+                SceneManager.LoadScene("speed");
+                break;
+            case 1:
+                MapMovement.Instance.mapSpeed = MapMovement.Instance.initialSpeed / 2;
+                break;
+                case 2:
+                MapMovement.Instance.mapSpeed = MapMovement.Instance.initialSpeed;
+                break;
+            default:
+                break;
+        }
+    }
+
     void HorizontalMovement()
     {
-        rb.AddForce(new Vector3(Input.GetAxis("Horizontal") * speedMultiplier, 0, 0));
+        if(lives > 1)rb.AddForce(new Vector3(Input.GetAxis("Horizontal") * speedMultiplier, 0, 0));
+    }
+
+    public IEnumerator rideBroom(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        lives ++;
+        actualLivesConsec();
     }
 }

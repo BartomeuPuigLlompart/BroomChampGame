@@ -61,6 +61,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\checkBorderCollision.cs" />
+    <Compile Include="Assets\MapMovement.cs" />
     <Compile Include="Assets\Movement.cs" />
     <Compile Include="Assets\NeonShapes\SelfDestroyScript.cs" />
     <Reference Include="UnityEditor.StandardEvents">

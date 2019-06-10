@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 33196332221116004}
   - component: {fileID: 23406100630036162}
   - component: {fileID: 65673226381016270}
+  - component: {fileID: 65763236006018684}
+  - component: {fileID: 114717107164972448}
   m_Layer: 9
   m_Name: shape1
   m_TagString: Untagged
@@ -94,5 +96,28 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 0.95, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65763236006018684
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1599083918605090}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.95, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114717107164972448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1599083918605090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6074bf3229bf9f4a868581d2b6e5bd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
