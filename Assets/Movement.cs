@@ -6,6 +6,17 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
 
+    public struct powerUpBag
+    {
+        public powerUP[] StoredSpeedPowerUp;
+        public powerUP[] StoredDeffensePowerUp;
+        public powerUP[] StoredAtackPowerUp;
+        public powerUP[] ActiveSpeedPowerUp;
+        public powerUP[] ActiveDeffensePowerUp;
+        public powerUP[] ActiveAtackPowerUp;
+    }
+
+    public static powerUpBag PowerUpBag;
     Rigidbody rb;
     private Vector3 moveDirection;
     private float VerticalMove;
@@ -27,13 +38,19 @@ public class Movement : MonoBehaviour
         LOW_em = transform.GetChild(0).GetChild(2).transform.GetComponent<ParticleSystem>();
         HIGH_em.enableEmission = false;
         LOW_em.enableEmission = false;
+
+        PowerUpBag.ActiveAtackPowerUp = new AtackPowerUp[4];
+        PowerUpBag.ActiveDeffensePowerUp = new DefensePowerUp[4];
+        PowerUpBag.ActiveSpeedPowerUp = new SpeedPowerUp[4];
+        PowerUpBag.StoredAtackPowerUp = new AtackPowerUp[4];
+        PowerUpBag.StoredDeffensePowerUp = new DefensePowerUp[4];
+        PowerUpBag.StoredSpeedPowerUp = new SpeedPowerUp[4];
     }
 
     // Update is called once per frame
     void Update()
     {
         AxisMovement();
-        Debug.Log(lives);
     }
 
     void AxisMovement()

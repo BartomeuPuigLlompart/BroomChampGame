@@ -65,6 +65,8 @@
     <Compile Include="Assets\MapMovement.cs" />
     <Compile Include="Assets\Movement.cs" />
     <Compile Include="Assets\NeonShapes\SelfDestroyScript.cs" />
+    <Compile Include="Assets\powerUP.cs" />
+    <Compile Include="Assets\randomPowerUp.cs" />
     <Compile Include="Assets\turbo.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/documents enti/projecte 2-rec/Broom Champ/BroomChampGame/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
