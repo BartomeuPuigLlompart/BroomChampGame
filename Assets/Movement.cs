@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-
     public struct powerUpBag
     {
         public powerUP[] StoredSpeedPowerUp;
@@ -14,7 +13,16 @@ public class Movement : MonoBehaviour
         public powerUP[] ActiveSpeedPowerUp;
         public powerUP[] ActiveDeffensePowerUp;
         public powerUP[] ActiveAtackPowerUp;
+
+        public GameObject[] StoredSpeedPowerUpSprite;
+        public GameObject[] StoredDeffensePowerUpSprite;
+        public GameObject[] StoredAtackPowerUpSprite;
+        public GameObject[] ActiveSpeedPowerUpSprite;
+        public GameObject[] ActiveDeffensePowerUpSprite;
+        public GameObject[] ActiveAtackPowerUpSprite;
     }
+
+    private GameObject canvasObject;
 
     public static powerUpBag PowerUpBag;
     Rigidbody rb;
@@ -39,12 +47,34 @@ public class Movement : MonoBehaviour
         HIGH_em.enableEmission = false;
         LOW_em.enableEmission = false;
 
+        canvasObject = GameObject.Find("Canvas");
+
         PowerUpBag.ActiveAtackPowerUp = new AtackPowerUp[4];
         PowerUpBag.ActiveDeffensePowerUp = new DefensePowerUp[4];
         PowerUpBag.ActiveSpeedPowerUp = new SpeedPowerUp[4];
         PowerUpBag.StoredAtackPowerUp = new AtackPowerUp[4];
         PowerUpBag.StoredDeffensePowerUp = new DefensePowerUp[4];
         PowerUpBag.StoredSpeedPowerUp = new SpeedPowerUp[4];
+
+        PowerUpBag.ActiveAtackPowerUpSprite = new GameObject[4];
+        PowerUpBag.ActiveDeffensePowerUpSprite = new GameObject[4];
+        PowerUpBag.ActiveSpeedPowerUpSprite = new GameObject[4];
+        PowerUpBag.StoredAtackPowerUpSprite = new GameObject[4];
+        PowerUpBag.StoredDeffensePowerUpSprite = new GameObject[4];
+        PowerUpBag.StoredSpeedPowerUpSprite = new GameObject[4];
+
+        for (int i = 0; i < canvasObject.transform.GetChild(0).GetChild(0).childCount; i++)
+            PowerUpBag.StoredSpeedPowerUpSprite[i] = canvasObject.transform.GetChild(0).GetChild(0).gameObject;
+        for (int i = 0; i < canvasObject.transform.GetChild(0).GetChild(1).childCount; i++)
+            PowerUpBag.ActiveSpeedPowerUpSprite[i] = canvasObject.transform.GetChild(0).GetChild(1).gameObject;
+        for (int i = 0; i < canvasObject.transform.GetChild(0).GetChild(2).childCount; i++)
+            PowerUpBag.StoredDeffensePowerUpSprite[i] = canvasObject.transform.GetChild(0).GetChild(2).gameObject;
+        for (int i = 0; i < canvasObject.transform.GetChild(0).GetChild(3).childCount; i++)
+            PowerUpBag.ActiveDeffensePowerUpSprite[i] = canvasObject.transform.GetChild(0).GetChild(3).gameObject;
+        for (int i = 0; i < canvasObject.transform.GetChild(0).GetChild(4).childCount; i++)
+            PowerUpBag.StoredAtackPowerUpSprite[i] = canvasObject.transform.GetChild(0).GetChild(4).gameObject;
+        for (int i = 0; i < canvasObject.transform.GetChild(0).GetChild(5).childCount; i++)
+            PowerUpBag.ActiveAtackPowerUpSprite[i] = canvasObject.transform.GetChild(0).GetChild(5).gameObject;
     }
 
     // Update is called once per frame
@@ -84,7 +114,7 @@ public class Movement : MonoBehaviour
         switch(lives)
         {
             case 0:
-                SceneManager.LoadScene("speed");
+                killPlayer();
                 break;
             case 1:
                 MapMovement.Instance.mapSpeed = MapMovement.Instance.initialSpeed / 2;
@@ -125,6 +155,11 @@ public class Movement : MonoBehaviour
 
         StopAllCoroutines();
         StartCoroutine(stopTurbo(2.0f));
+    }
+
+    public void killPlayer()
+    {
+        SceneManager.LoadScene("speed");
     }
 
     IEnumerator stopTurbo(float time)
