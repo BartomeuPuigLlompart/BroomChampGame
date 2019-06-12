@@ -19,8 +19,8 @@ public class checkBorderCollision : MonoBehaviour {
         {
             player.GetComponent<Movement>().lives--;
             if (player.GetComponent<Movement>().lives == 1) StartCoroutine(player.GetComponent<Movement>().rideBroom(5.0f));
+            else if (player.GetComponent<Movement>().lives == 0) player.GetComponent<Movement>().killPlayer();
             colInmu = Time.realtimeSinceStartup;
-            player.GetComponent<Movement>().actualLivesConsec();
         }
 
     }

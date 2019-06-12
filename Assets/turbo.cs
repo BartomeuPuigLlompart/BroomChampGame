@@ -6,6 +6,8 @@ public class turbo : MonoBehaviour {
 
     ParticleSystem effect;
     GameObject player;
+    public static float turboRef;
+    public static float turboMax = 2.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -18,7 +20,7 @@ public class turbo : MonoBehaviour {
     {
         if (other.gameObject == player)
         {
-            player.GetComponent<Movement>().activateTurbo();
+            turboRef = Time.realtimeSinceStartup;
             effect.enableEmission = true;
             this.GetComponent<MeshRenderer>().enabled = false;
             StartCoroutine(stopParticle(2));

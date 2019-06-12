@@ -8,6 +8,7 @@ public class powerUP : MonoBehaviour {
     public enum comboKey{UP, DOWN, LEFT, RIGHT}
     public comboKey ComboKey;
     public float duration;
+    public float activationTime;
     ParticleSystem effect;
     GameObject player;
     public Sprite image; 
@@ -16,6 +17,7 @@ public class powerUP : MonoBehaviour {
     {
         //ComboKey = (comboKey)Random.Range(0.0f, 4.0f);
         duration = 4.0f;
+        activationTime = 0.0f;
         effect = transform.GetChild(0).GetComponent<ParticleSystem>();
         effect.enableEmission = false;
         player = GameObject.Find("Player");

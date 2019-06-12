@@ -112,6 +112,7 @@ public class Movement : MonoBehaviour
     {
         AxisMovement();
         powerUpBagUpdate();
+        actualLivesConsec();
     }
 
     void AxisMovement()
@@ -142,25 +143,17 @@ public class Movement : MonoBehaviour
 
     public void actualLivesConsec()
     {
-        switch(lives)
+        if (lives == 1)
         {
-            case 0:
-                killPlayer();
-                break;
-            case 1:
-                MapMovement.Instance.mapSpeed = MapMovement.Instance.initialSpeed / 2;
-                HIGH_em.enableEmission = false;
-                MED_em.enableEmission = false;
-                LOW_em.enableEmission = true;
-                break;
-                case 2:
-                MapMovement.Instance.mapSpeed = MapMovement.Instance.initialSpeed;
-                HIGH_em.enableEmission = false;
-                MED_em.enableEmission = true;
-                LOW_em.enableEmission = false;
-                break;
-            default:
-                break;
+            Color c = canvasObject.transform.GetChild(0).GetComponent<Image>().color;
+            c.b = c.g = 0.0f;
+            canvasObject.transform.GetChild(0).GetComponent<Image>().color = c;
+        }
+        else
+        {
+            Color c = canvasObject.transform.GetChild(0).GetComponent<Image>().color;
+            c.b = c.g = 255.0f;
+            canvasObject.transform.GetChild(0).GetComponent<Image>().color = c;
         }
     }
 
@@ -174,35 +167,36 @@ public class Movement : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         lives ++;
-        actualLivesConsec();
-    }
-
-    public void activateTurbo()
-    {
-        MapMovement.Instance.mapSpeed = MapMovement.Instance.initialSpeed * 2;
-        HIGH_em.enableEmission = true;
-        MED_em.enableEmission = false;
-        LOW_em.enableEmission = false;
-
-        StopAllCoroutines();
-        StartCoroutine(stopTurbo(2.0f));
     }
 
     private void powerUpBagUpdate()
     {
         checkCombo();
         updateTime();
+        updatePowers();
     }
 
     private void checkCombo()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.UpArrow))
         {
-            swapStoredPowerUps();
+            swapStoredPowerUps(powerUP.comboKey.UP);
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            swapStoredPowerUps(powerUP.comboKey.DOWN);
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            swapStoredPowerUps(powerUP.comboKey.LEFT);
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            swapStoredPowerUps(powerUP.comboKey.RIGHT);
         }
     }
 
-    private void swapStoredPowerUps()
+    private void swapStoredPowerUps(powerUP.comboKey key)
     {
         bool full1, full2, full3;
         Debug.Log(full1 = PowerUpBag.StoredSpeedPowerUp[0] == null ? false : true);
@@ -212,43 +206,88 @@ public class Movement : MonoBehaviour
         {
             if (PowerUpBag.ActiveSpeedPowerUp[i] == null && full1)
             {
-                Debug.Log(i);
                 Color c;
                 c = PowerUpBag.StoredSpeedPowerUpSprite[0].GetComponent<Image>().color;
                 c.a = 0;
                 PowerUpBag.StoredSpeedPowerUpSprite[0].GetComponent<Image>().color = c;
-                PowerUpBag.ActiveSpeedPowerUp[i] = PowerUpBag.StoredSpeedPowerUp[0].GetComponent<powerUP>();
-                c = PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color;
-                c.a = 255;
-                PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color = c;
+                if (key == PowerUpBag.StoredSpeedPowerUp[0].GetComponent<powerUP>().ComboKey)
+                {
+                    if (i == 0)
+                    {
+                        PowerUpBag.ActiveSpeedPowerUp[i] = PowerUpBag.StoredSpeedPowerUp[0].GetComponent<powerUP>();
+                        PowerUpBag.ActiveSpeedPowerUp[i].activationTime = Time.realtimeSinceStartup;
+                    }
+                    else
+                    {
+                        powerUP aux = PowerUpBag.ActiveSpeedPowerUp[i - 1].GetComponent<powerUP>();
+                        PowerUpBag.ActiveSpeedPowerUp[i - 1] = PowerUpBag.StoredSpeedPowerUp[0].GetComponent<powerUP>();
+                        c = PowerUpBag.ActiveSpeedPowerUpSprite[i - 1].GetComponent<Image>().color;
+                        c.a = 1.0f;
+                        PowerUpBag.ActiveSpeedPowerUpSprite[i - 1].GetComponent<Image>().color = c;
+                        PowerUpBag.ActiveSpeedPowerUp[i] = aux.GetComponent<powerUP>();
+                    }
+                    c = PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color;
+                    c.a = 255;
+                    PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color = c;
+                }
                 full1 = false;
             }
 
             if (PowerUpBag.ActiveDeffensePowerUp[i] == null && full2)
             {
-                Debug.Log(i);
                 Color c;
                 c = PowerUpBag.StoredDeffensePowerUpSprite[0].GetComponent<Image>().color;
                 c.a = 0;
                 PowerUpBag.StoredDeffensePowerUpSprite[0].GetComponent<Image>().color = c;
-                PowerUpBag.ActiveDeffensePowerUp[i] = PowerUpBag.StoredDeffensePowerUp[0].GetComponent<powerUP>();
-                c = PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color;
-                c.a = 255;
-                PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color = c;
+                if (key == PowerUpBag.StoredDeffensePowerUp[0].GetComponent<powerUP>().ComboKey)
+                {
+                    if (i == 0)
+                    {
+                        PowerUpBag.ActiveDeffensePowerUp[i] = PowerUpBag.StoredDeffensePowerUp[0].GetComponent<powerUP>();
+                        PowerUpBag.ActiveDeffensePowerUp[i].activationTime = Time.realtimeSinceStartup;
+                    }
+                    else
+                    {
+                        powerUP aux = PowerUpBag.ActiveDeffensePowerUp[i - 1].GetComponent<powerUP>();
+                        PowerUpBag.ActiveDeffensePowerUp[i - 1] = PowerUpBag.StoredDeffensePowerUp[0].GetComponent<powerUP>();
+                        c = PowerUpBag.ActiveDeffensePowerUpSprite[i - 1].GetComponent<Image>().color ;
+                        c.a = 1.0f;
+                        PowerUpBag.ActiveDeffensePowerUpSprite[i - 1].GetComponent<Image>().color = c;
+                        PowerUpBag.ActiveDeffensePowerUp[i] = aux.GetComponent<powerUP>();
+                    }
+                    c = PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color;
+                    c.a = 255;
+                    PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color = c;
+                }
                 full2 = false;
             }
 
             if (PowerUpBag.ActiveAtackPowerUp[i] == null && full3)
             {
-                Debug.Log(i);
                 Color c;
                 c = PowerUpBag.StoredAtackPowerUpSprite[0].GetComponent<Image>().color;
                 c.a = 0;
                 PowerUpBag.StoredAtackPowerUpSprite[0].GetComponent<Image>().color = c;
-                PowerUpBag.ActiveAtackPowerUp[i] = PowerUpBag.StoredAtackPowerUp[0].GetComponent<powerUP>();
-                c = PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color;
-                c.a = 255;
-                PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color = c;
+                if (key == PowerUpBag.StoredAtackPowerUp[0].GetComponent<powerUP>().ComboKey)
+                {
+                    if (i == 0)
+                    {
+                        PowerUpBag.ActiveAtackPowerUp[i] = PowerUpBag.StoredAtackPowerUp[0].GetComponent<powerUP>();
+                        PowerUpBag.ActiveAtackPowerUp[i].activationTime = Time.realtimeSinceStartup;
+                    }
+                    else
+                    {
+                        powerUP aux = PowerUpBag.ActiveAtackPowerUp[i - 1].GetComponent<powerUP>();
+                        PowerUpBag.ActiveAtackPowerUp[i - 1] = PowerUpBag.StoredAtackPowerUp[0].GetComponent<powerUP>();
+                        c = PowerUpBag.ActiveAtackPowerUpSprite[i - 1].GetComponent<Image>().color;
+                        c.a = 1.0f;
+                        PowerUpBag.ActiveAtackPowerUpSprite[i - 1].GetComponent<Image>().color = c;
+                        PowerUpBag.ActiveAtackPowerUp[i] = aux.GetComponent<powerUP>();
+                    }
+                    c = PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color;
+                    c.a = 255;
+                    PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color = c;
+                }
                 full3 = false;
             }
         }
@@ -299,18 +338,109 @@ public class Movement : MonoBehaviour
 
     private void updateTime()
     {
+        for (int i = PowerUpBag.ActiveAtackPowerUpSprite.Length - 1; i >= 0; i--)
+        {
+            if(PowerUpBag.ActiveSpeedPowerUp[i] != null && PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color.a > 0 && PowerUpBag.ActiveSpeedPowerUp[i].activationTime != 0)
+            {
+                Color c = PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color;
+                c.a = (((4 - (Time.realtimeSinceStartup - PowerUpBag.ActiveSpeedPowerUp[i].activationTime))) / PowerUpBag.ActiveSpeedPowerUp[i].duration);
+                PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color = c;
+            }
+            else if(PowerUpBag.ActiveSpeedPowerUp[i] != null && PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color.a <= 0)
+            {
+                PowerUpBag.ActiveSpeedPowerUp[i] = null;
+                if (i != 0) PowerUpBag.ActiveSpeedPowerUp[i - 1].activationTime = Time.realtimeSinceStartup;
+            }
 
+            if (PowerUpBag.ActiveDeffensePowerUp[i] != null && PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color.a > 0 && PowerUpBag.ActiveDeffensePowerUp[i].activationTime != 0)
+            {
+                Color c = PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color;
+                c.a = (((4 - (Time.realtimeSinceStartup - PowerUpBag.ActiveDeffensePowerUp[i].activationTime))) / PowerUpBag.ActiveDeffensePowerUp[i].duration);
+                PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color = c;
+            }
+            else if (PowerUpBag.ActiveDeffensePowerUp[i] != null && PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color.a <= 0)
+            {
+                PowerUpBag.ActiveDeffensePowerUp[i] = null;
+                if (i != 0) PowerUpBag.ActiveDeffensePowerUp[i - 1].activationTime = Time.realtimeSinceStartup;
+            }
+
+            if (PowerUpBag.ActiveAtackPowerUp[i] != null && PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color.a > 0 && PowerUpBag.ActiveAtackPowerUp[i].activationTime != 0)
+            {
+                Color c = PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color;
+                c.a = (((4 - (Time.realtimeSinceStartup - PowerUpBag.ActiveAtackPowerUp[i].activationTime))) / PowerUpBag.ActiveAtackPowerUp[i].duration);
+                PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color = c;
+            }
+            else if (PowerUpBag.ActiveAtackPowerUp[i] != null && PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color.a <= 0)
+            {
+                PowerUpBag.ActiveAtackPowerUp[i] = null;
+                if (i != 0) PowerUpBag.ActiveAtackPowerUp[i - 1].activationTime = Time.realtimeSinceStartup;
+            }
+        }
+    }
+
+    private void updatePowers()
+    {
+        for (int i = PowerUpBag.ActiveAtackPowerUpSprite.Length - 1; i >= 0; i--)
+        {
+            if (PowerUpBag.ActiveSpeedPowerUp[i] != null)
+            {
+                if(lives > 1)
+                {
+                    MapMovement.Instance.mapSpeed = MapMovement.Instance.initialSpeed * 2;
+                    HIGH_em.enableEmission = true;
+                    MED_em.enableEmission = false;
+                    LOW_em.enableEmission = false;
+                }
+                else
+                {
+                    MapMovement.Instance.mapSpeed = MapMovement.Instance.initialSpeed;
+                    HIGH_em.enableEmission = false;
+                    MED_em.enableEmission = true;
+                    LOW_em.enableEmission = false;
+                }
+            }
+            else if(i == 0)
+            {
+                if (Time.realtimeSinceStartup - turbo.turboRef > turbo.turboMax)
+                {
+                    if (lives == 1)
+                    {
+                        MapMovement.Instance.mapSpeed = MapMovement.Instance.initialSpeed / 2;
+                        HIGH_em.enableEmission = false;
+                        MED_em.enableEmission = false;
+                        LOW_em.enableEmission = true;
+                    }
+                    else
+                    {
+                        MapMovement.Instance.mapSpeed = MapMovement.Instance.initialSpeed;
+                        HIGH_em.enableEmission = false;
+                        MED_em.enableEmission = true;
+                        LOW_em.enableEmission = false;
+                    }
+                }
+                else
+                {
+                    if(lives == 1)
+                    {
+                        MapMovement.Instance.mapSpeed = MapMovement.Instance.initialSpeed;
+                        HIGH_em.enableEmission = false;
+                        MED_em.enableEmission = true;
+                        LOW_em.enableEmission = false;
+                    }
+                    else
+                    {
+                        MapMovement.Instance.mapSpeed = MapMovement.Instance.initialSpeed * 2;
+                        HIGH_em.enableEmission = true;
+                        MED_em.enableEmission = false;
+                        LOW_em.enableEmission = false;
+                    }
+                }
+            }
+        }
     }
 
     public void killPlayer()
     {
         SceneManager.LoadScene("speed");
-    }
-
-    IEnumerator stopTurbo(float time)
-    {
-        yield return new WaitForSeconds(time);
-
-        actualLivesConsec();
     }
 }
