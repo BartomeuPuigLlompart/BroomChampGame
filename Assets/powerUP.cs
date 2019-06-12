@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class powerUP : MonoBehaviour {
@@ -13,12 +14,11 @@ public class powerUP : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        ComboKey = (comboKey)Random.Range(0.0f, 4.0f);
+        //ComboKey = (comboKey)Random.Range(0.0f, 4.0f);
         duration = 4.0f;
         effect = transform.GetChild(0).GetComponent<ParticleSystem>();
         effect.enableEmission = false;
         player = GameObject.Find("Player");
-        image = this.gameObject.GetComponent<Sprite>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -28,6 +28,7 @@ public class powerUP : MonoBehaviour {
             effect.enableEmission = true;
             power_UP_Effect();
             this.GetComponent<MeshRenderer>().enabled = false;
+            this.GetComponent<Collider>().enabled = false;
             StartCoroutine(stopParticle(2));
         }
     }
@@ -53,8 +54,13 @@ public class SpeedPowerUp : powerUP
             if (Movement.PowerUpBag.StoredSpeedPowerUp[i] == null)
             {
                 Movement.PowerUpBag.StoredSpeedPowerUp[i] = this;
+                Color c;
+                c = Movement.PowerUpBag.StoredSpeedPowerUpSprite[i].GetComponent<Image>().color;
+                c.a = 255;
+                Movement.PowerUpBag.StoredSpeedPowerUpSprite[i].GetComponent<Image>().color = c;
+                Movement.PowerUpBag.StoredSpeedPowerUpSprite[i].GetComponent<Image>().sprite = image;
                 full = false;
-                break;
+                return;
             }
         }
         if (full) GameObject.Find("Player").GetComponent<Movement>().killPlayer();
@@ -74,6 +80,11 @@ public class DefensePowerUp : powerUP
             if (Movement.PowerUpBag.StoredDeffensePowerUp[i] == null)
             {
                 Movement.PowerUpBag.StoredDeffensePowerUp[i] = this;
+                Color c;
+                c = Movement.PowerUpBag.StoredDeffensePowerUpSprite[i].GetComponent<Image>().color;
+                c.a = 255;
+                Movement.PowerUpBag.StoredDeffensePowerUpSprite[i].GetComponent<Image>().color = c;
+                Movement.PowerUpBag.StoredDeffensePowerUpSprite[i].GetComponent<Image>().sprite = image;
                 full = false;
                 break;
             }
@@ -95,6 +106,11 @@ public class AtackPowerUp : powerUP
             if (Movement.PowerUpBag.StoredAtackPowerUp[i] == null)
             {
                 Movement.PowerUpBag.StoredAtackPowerUp[i] = this;
+                Color c;               
+                c = Movement.PowerUpBag.StoredAtackPowerUpSprite[i].GetComponent<Image>().color;
+                c.a = 255;
+                Movement.PowerUpBag.StoredAtackPowerUpSprite[i].GetComponent<Image>().color = c;
+                Movement.PowerUpBag.StoredAtackPowerUpSprite[i].GetComponent<Image>().sprite = image;
                 full = false;
                 break;
             }

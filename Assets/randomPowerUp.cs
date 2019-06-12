@@ -12,7 +12,6 @@ public class randomPowerUp : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        powerUP PowerUp;
         int powerUpNum = gameObject.transform.childCount; ;
         powerUpType[] pType = new powerUpType[powerUpNum];
         GameObject[] aux = new GameObject[powerUpNum];
@@ -42,12 +41,60 @@ public class randomPowerUp : MonoBehaviour {
             {
                 case powerUpType.ATACK:
                     aux[i].AddComponent<AtackPowerUp>();
+                    aux[i].GetComponent<AtackPowerUp>().ComboKey = (powerUP.comboKey)Random.Range(0.0f, 4.0f);
+                    switch (aux[i].GetComponent<AtackPowerUp>().ComboKey)
+                    {
+                        case powerUP.comboKey.UP:
+                            aux[i].GetComponent<AtackPowerUp>().image = Resources.Load<Sprite>("Sprites/RedSquare_UP");
+                            break;
+                        case powerUP.comboKey.DOWN:
+                            aux[i].GetComponent<AtackPowerUp>().image = Resources.Load<Sprite>("Sprites/RedSquare_DOWN");
+                            break;
+                        case powerUP.comboKey.LEFT:
+                            aux[i].GetComponent<AtackPowerUp>().image = Resources.Load<Sprite>("Sprites/RedSquare_LEFT");
+                            break;
+                        case powerUP.comboKey.RIGHT:
+                            aux[i].GetComponent<AtackPowerUp>().image = Resources.Load<Sprite>("Sprites/RedSquare_RIGHT");
+                            break;
+                    }
                     break;
                 case powerUpType.DEFFENSE:
                     aux[i].AddComponent<DefensePowerUp>();
+                    aux[i].GetComponent<DefensePowerUp>().ComboKey = (powerUP.comboKey)Random.Range(0.0f, 4.0f);
+                    switch (aux[i].GetComponent<DefensePowerUp>().ComboKey)
+                    {
+                        case powerUP.comboKey.UP:
+                            aux[i].GetComponent<DefensePowerUp>().image = Resources.Load<Sprite>("Sprites/GreenSquare_UP");
+                            break;
+                        case powerUP.comboKey.DOWN:
+                            aux[i].GetComponent<DefensePowerUp>().image = Resources.Load<Sprite>("Sprites/GreenSquare_DOWN");
+                            break;
+                        case powerUP.comboKey.LEFT:
+                            aux[i].GetComponent<DefensePowerUp>().image = Resources.Load<Sprite>("Sprites/GreenSquare_LEFT");
+                            break;
+                        case powerUP.comboKey.RIGHT:
+                            aux[i].GetComponent<DefensePowerUp>().image = Resources.Load<Sprite>("Sprites/GreenSquare_RIGHT");
+                            break;
+                    }
                     break;
                 case powerUpType.SPEED:
                     aux[i].AddComponent<SpeedPowerUp>();
+                    aux[i].GetComponent<SpeedPowerUp>().ComboKey = (powerUP.comboKey)Random.Range(0.0f, 4.0f);
+                    switch (aux[i].GetComponent<SpeedPowerUp>().ComboKey)
+                    {
+                        case powerUP.comboKey.UP:
+                            aux[i].GetComponent<SpeedPowerUp>().image = Resources.Load<Sprite>("Sprites/BlueSquare_UP");
+                            break;
+                        case powerUP.comboKey.DOWN:
+                            aux[i].GetComponent<SpeedPowerUp>().image = Resources.Load<Sprite>("Sprites/BlueSquare_DOWN");
+                            break;
+                        case powerUP.comboKey.LEFT:
+                            aux[i].GetComponent<SpeedPowerUp>().image = Resources.Load<Sprite>("Sprites/BlueSquare_LEFT");
+                            break;
+                        case powerUP.comboKey.RIGHT:
+                            aux[i].GetComponent<SpeedPowerUp>().image = Resources.Load<Sprite>("Sprites/BlueSquare_RIGHT");
+                            break;
+                    }
                     break;
             }
         }
