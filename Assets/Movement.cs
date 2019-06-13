@@ -347,7 +347,7 @@ public class Movement : MonoBehaviour
             if(PowerUpBag.ActiveSpeedPowerUp[i] != null && PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color.a > 0 && PowerUpBag.ActiveSpeedPowerUp[i].activationTime != 0)
             {
                 Color c = PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color;
-                c.a = (((4 - (Time.realtimeSinceStartup - PowerUpBag.ActiveSpeedPowerUp[i].activationTime))) / PowerUpBag.ActiveSpeedPowerUp[i].duration);
+                c.a = (((PowerUpBag.ActiveSpeedPowerUp[i].duration - (Time.realtimeSinceStartup - PowerUpBag.ActiveSpeedPowerUp[i].activationTime))) / PowerUpBag.ActiveSpeedPowerUp[i].duration);
                 PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color = c;
             }
             else if(PowerUpBag.ActiveSpeedPowerUp[i] != null && PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color.a <= 0)
@@ -361,7 +361,7 @@ public class Movement : MonoBehaviour
                 if (lives == 3)
                 {
                     Color c = PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color;
-                    c.a = (((4 - (Time.realtimeSinceStartup - PowerUpBag.ActiveDeffensePowerUp[i].activationTime))) / PowerUpBag.ActiveDeffensePowerUp[i].duration);
+                    c.a = (((PowerUpBag.ActiveDeffensePowerUp[i].duration - (Time.realtimeSinceStartup - PowerUpBag.ActiveDeffensePowerUp[i].activationTime))) / PowerUpBag.ActiveDeffensePowerUp[i].duration);
                     PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color = c;
                 }
                 else
@@ -384,8 +384,13 @@ public class Movement : MonoBehaviour
 
             if (PowerUpBag.ActiveAtackPowerUp[i] != null && PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color.a > 0 && PowerUpBag.ActiveAtackPowerUp[i].activationTime != 0)
             {
+                if(Input.GetKeyDown(KeyCode.Mouse0))
+                {
+                    Instantiate(Resources.Load("ResPrefabs/Projectile"));
+                    PowerUpBag.ActiveAtackPowerUp[i].duration *= 0.75f;
+                }
                 Color c = PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color;
-                c.a = (((4 - (Time.realtimeSinceStartup - PowerUpBag.ActiveAtackPowerUp[i].activationTime))) / PowerUpBag.ActiveAtackPowerUp[i].duration);
+                c.a = (((PowerUpBag.ActiveAtackPowerUp[i].duration - (Time.realtimeSinceStartup - PowerUpBag.ActiveAtackPowerUp[i].activationTime))) / PowerUpBag.ActiveAtackPowerUp[i].duration);
                 PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color = c;
             }
             else if (PowerUpBag.ActiveAtackPowerUp[i] != null && PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color.a <= 0)
@@ -454,6 +459,7 @@ public class Movement : MonoBehaviour
                     }
                 }
             }
+
             if (lives == 3) shield.SetActive(true);
             else shield.SetActive(false);
         }
