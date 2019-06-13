@@ -8,17 +8,40 @@ public class MapMovement : MonoBehaviour {
     public Vector3 initialSpeed;
     Rigidbody rb;
     public static MapMovement Instance;
+    private GameObject[] mapFragments;
 
     // Use this for initialization
     void Start () {
+        mapFragments = new GameObject[10];
         initialSpeed = new Vector3(-5f, 0, 0);
         mapSpeed = initialSpeed;
         rb = transform.GetComponent<Rigidbody>();
         Instance = this;
+
+        mapFragments[0] = Instantiate(Resources.Load("ResPrefabs/Map Fragments/Fragment_1") as GameObject);
+        mapFragments[0].transform.SetParent(transform.GetChild(0).transform);
+        mapFragments[0].transform.localPosition = Vector3.zero;
+
+        for (int i = 1; i < 10; i++)
+        {
+            string directory = "ResPrefabs/Map Fragments/Fragment_" + ((int)Random.Range(1.0f, 6.0f)).ToString();
+            mapFragments[i] = Instantiate(Resources.Load(directory) as GameObject);
+            mapFragments[i].transform.SetParent(transform.GetChild(0).transform);
+            mapFragments[i].transform.localPosition = new Vector3(i * 100.0f, 0.0f, 0.0f);
+            mapFragments[i].SetActive(false);
+        }
 	}
 	
 	// Update is called once per frame
 	void Update () {
-         rb.velocity = (mapSpeed);
-	}
+        rb.velocity = (mapSpeed);
+
+        Debug.Log((int)Mathf.Abs((transform.position.x - 100) / 10) - 10 * ((int)(Mathf.Abs((transform.position.x - 100) / 100))));
+
+        if ((int)Mathf.Abs((transform.position.x - 100) / 10) - 10 * ((int)(Mathf.Abs((transform.position.x - 100) / 100))) == 5)
+        {
+            mapFragments[(int)(Mathf.Abs((transform.position.x - 100) / 100))].SetActive(true);
+        }
+        else if ((int)(Mathf.Abs((transform.position.x - 100) / 100)) - 1 != 0) Destroy(mapFragments[(int)(Mathf.Abs((transform.position.x - 100) / 100)) - 2]);
+    }
 }

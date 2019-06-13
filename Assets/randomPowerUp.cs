@@ -12,26 +12,26 @@ public class randomPowerUp : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        int powerUpNum = gameObject.transform.childCount; ;
+        int powerUpNum = gameObject.transform.childCount;
         powerUpType[] pType = new powerUpType[powerUpNum];
         GameObject[] aux = new GameObject[powerUpNum];
+        Debug.Log(powerUpNum);
         for (int i = 0; i < powerUpNum; i++)
         {
             pType[i] = (powerUpType)Random.Range(0.0f, 3.0f);
             switch (pType[i])
             {
                 case powerUpType.ATACK:
-                    Instantiate(Resources.Load("ResPrefabs/atackPowerUp"));
+                    aux[i] = Instantiate(Resources.Load("ResPrefabs/atackPowerUp") as GameObject);
                     break;
                 case powerUpType.DEFFENSE:
-                    Instantiate(Resources.Load("ResPrefabs/deffensePowerUp"));
+                    aux[i] = Instantiate(Resources.Load("ResPrefabs/deffensePowerUp") as GameObject);
                     break;
                 case powerUpType.SPEED:
-                    Instantiate(Resources.Load("ResPrefabs/speedPowerUp"));
+                    aux[i] = Instantiate(Resources.Load("ResPrefabs/speedPowerUp") as GameObject);
                     break;
             }
         }
-        aux = GameObject.FindGameObjectsWithTag("PowerUp");
         for (int i = 0; i < powerUpNum; i++)
         {
             aux[i].transform.SetParent(this.gameObject.transform.GetChild(i).transform);
