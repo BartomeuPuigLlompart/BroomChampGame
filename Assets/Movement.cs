@@ -24,6 +24,7 @@ public class Movement : MonoBehaviour
     }
 
     private GameObject canvasObject;
+    private GameObject shield;
 
     public static powerUpBag PowerUpBag;
     Rigidbody rb;
@@ -49,6 +50,8 @@ public class Movement : MonoBehaviour
         LOW_em.enableEmission = false;
 
         canvasObject = GameObject.Find("Canvas");
+        shield = transform.GetChild(1).GetChild(0).gameObject;
+        shield.SetActive(false);
 
         PowerUpBag.ActiveAtackPowerUp = new AtackPowerUp[4];
         PowerUpBag.ActiveDeffensePowerUp = new DefensePowerUp[4];
@@ -245,6 +248,7 @@ public class Movement : MonoBehaviour
                     {
                         PowerUpBag.ActiveDeffensePowerUp[i] = PowerUpBag.StoredDeffensePowerUp[0].GetComponent<powerUP>();
                         PowerUpBag.ActiveDeffensePowerUp[i].activationTime = Time.realtimeSinceStartup;
+                        lives = 3;
                     }
                     else
                     {
@@ -354,14 +358,28 @@ public class Movement : MonoBehaviour
 
             if (PowerUpBag.ActiveDeffensePowerUp[i] != null && PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color.a > 0 && PowerUpBag.ActiveDeffensePowerUp[i].activationTime != 0)
             {
-                Color c = PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color;
-                c.a = (((4 - (Time.realtimeSinceStartup - PowerUpBag.ActiveDeffensePowerUp[i].activationTime))) / PowerUpBag.ActiveDeffensePowerUp[i].duration);
-                PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color = c;
+                if (lives == 3)
+                {
+                    Color c = PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color;
+                    c.a = (((4 - (Time.realtimeSinceStartup - PowerUpBag.ActiveDeffensePowerUp[i].activationTime))) / PowerUpBag.ActiveDeffensePowerUp[i].duration);
+                    PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color = c;
+                }
+                else
+                {
+                    Color c = PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color;
+                    c.a = 0.0f;
+                    PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color = c;
+                }
             }
             else if (PowerUpBag.ActiveDeffensePowerUp[i] != null && PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color.a <= 0)
             {
                 PowerUpBag.ActiveDeffensePowerUp[i] = null;
-                if (i != 0) PowerUpBag.ActiveDeffensePowerUp[i - 1].activationTime = Time.realtimeSinceStartup;
+                if (i != 0)
+                {
+                    PowerUpBag.ActiveDeffensePowerUp[i - 1].activationTime = Time.realtimeSinceStartup;
+                    lives = 3;
+                }
+                else lives = 2;
             }
 
             if (PowerUpBag.ActiveAtackPowerUp[i] != null && PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color.a > 0 && PowerUpBag.ActiveAtackPowerUp[i].activationTime != 0)
@@ -436,6 +454,8 @@ public class Movement : MonoBehaviour
                     }
                 }
             }
+            if (lives == 3) shield.SetActive(true);
+            else shield.SetActive(false);
         }
     }
 
