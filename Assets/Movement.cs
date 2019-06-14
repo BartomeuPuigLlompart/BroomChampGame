@@ -116,6 +116,7 @@ public class Movement : MonoBehaviour
         AxisMovement();
         powerUpBagUpdate();
         actualLivesConsec();
+        if (transform.position.x < -13 - 0f || transform.position.x > 13) killPlayer();
     }
 
     void AxisMovement()
@@ -202,6 +203,7 @@ public class Movement : MonoBehaviour
     private void swapStoredPowerUps(powerUP.comboKey key)
     {
         bool full1, full2, full3;
+        int bonification = 0;
         Debug.Log(full1 = PowerUpBag.StoredSpeedPowerUp[0] == null ? false : true);
         Debug.Log(full2 = PowerUpBag.StoredDeffensePowerUp[0] == null ? false : true);
         Debug.Log(full3 = PowerUpBag.StoredAtackPowerUp[0] == null ? false : true);
@@ -215,6 +217,7 @@ public class Movement : MonoBehaviour
                 PowerUpBag.StoredSpeedPowerUpSprite[0].GetComponent<Image>().color = c;
                 if (key == PowerUpBag.StoredSpeedPowerUp[0].GetComponent<powerUP>().ComboKey)
                 {
+                    bonification++;
                     if (i == 0)
                     {
                         PowerUpBag.ActiveSpeedPowerUp[i] = PowerUpBag.StoredSpeedPowerUp[0].GetComponent<powerUP>();
@@ -244,6 +247,7 @@ public class Movement : MonoBehaviour
                 PowerUpBag.StoredDeffensePowerUpSprite[0].GetComponent<Image>().color = c;
                 if (key == PowerUpBag.StoredDeffensePowerUp[0].GetComponent<powerUP>().ComboKey)
                 {
+                    bonification++;
                     if (i == 0)
                     {
                         PowerUpBag.ActiveDeffensePowerUp[i] = PowerUpBag.StoredDeffensePowerUp[0].GetComponent<powerUP>();
@@ -274,6 +278,7 @@ public class Movement : MonoBehaviour
                 PowerUpBag.StoredAtackPowerUpSprite[0].GetComponent<Image>().color = c;
                 if (key == PowerUpBag.StoredAtackPowerUp[0].GetComponent<powerUP>().ComboKey)
                 {
+                    bonification++;
                     if (i == 0)
                     {
                         PowerUpBag.ActiveAtackPowerUp[i] = PowerUpBag.StoredAtackPowerUp[0].GetComponent<powerUP>();
@@ -296,6 +301,14 @@ public class Movement : MonoBehaviour
             }
         }
         if (full1 || full2 || full3) killPlayer();
+
+        if (bonification > 1)
+        {
+            if(PowerUpBag.StoredSpeedPowerUp[0] != null) PowerUpBag.StoredSpeedPowerUp[0].duration *= bonification;
+            if(PowerUpBag.StoredDeffensePowerUp[0] != null) PowerUpBag.StoredDeffensePowerUp[0].duration *= bonification;
+            if(PowerUpBag.StoredAtackPowerUp[0] != null) PowerUpBag.StoredAtackPowerUp[0].duration *= bonification;
+        }
+
         Color color;
         PowerUpBag.StoredSpeedPowerUp[0] = PowerUpBag.StoredSpeedPowerUp[1] == null ? null : PowerUpBag.StoredSpeedPowerUp[1].GetComponent<powerUP>();
         PowerUpBag.StoredSpeedPowerUpSprite[0].GetComponent<Image>().sprite = PowerUpBag.StoredSpeedPowerUpSprite[1].GetComponent<Image>().sprite;

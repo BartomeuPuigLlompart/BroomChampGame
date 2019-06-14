@@ -25,7 +25,7 @@ public class MapMovement : MonoBehaviour {
 
         for (int i = 1; i < 10; i++)
         {
-            string directory = "ResPrefabs/Map Fragments/Fragment_" + ((int)Random.Range(1.0f, 6.0f)).ToString();
+            string directory = "ResPrefabs/Map Fragments/Fragment_" + ((int)Random.Range(1.0f, 9.0f)).ToString();
             mapFragments[i] = Instantiate(Resources.Load(directory) as GameObject);
             mapFragments[i].transform.SetParent(transform.GetChild(0).transform);
             mapFragments[i].transform.localPosition = new Vector3(i * 100.0f, 0.0f, 0.0f);
