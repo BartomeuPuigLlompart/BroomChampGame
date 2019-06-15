@@ -15,8 +15,6 @@ public class powerUP : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        //ComboKey = (comboKey)Random.Range(0.0f, 4.0f);
-        duration = 4.0f;
         activationTime = 0.0f;
         effect = transform.GetChild(0).GetComponent<ParticleSystem>();
         effect.enableEmission = false;
@@ -49,7 +47,6 @@ public class SpeedPowerUp : powerUP
 {
 
     public override void power_UP_Effect() {
-        Debug.Log("speed");
         bool full = true;
         for (int i = 0; i < 4; i++)
         {
@@ -75,7 +72,6 @@ public class DefensePowerUp : powerUP
 
     public override void power_UP_Effect()
     {
-        Debug.Log("defense");
         bool full = true;
         for (int i = 0; i < 4; i++)
         {
@@ -101,7 +97,6 @@ public class AtackPowerUp : powerUP
 
     public override void power_UP_Effect()
     {
-        Debug.Log("atack");
         bool full = true;
         for (int i = 0; i < 4; i++)
         {

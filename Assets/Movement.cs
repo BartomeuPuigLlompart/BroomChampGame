@@ -204,9 +204,9 @@ public class Movement : MonoBehaviour
     {
         bool full1, full2, full3;
         int bonification = 0;
-        Debug.Log(full1 = PowerUpBag.StoredSpeedPowerUp[0] == null ? false : true);
-        Debug.Log(full2 = PowerUpBag.StoredDeffensePowerUp[0] == null ? false : true);
-        Debug.Log(full3 = PowerUpBag.StoredAtackPowerUp[0] == null ? false : true);
+        full1 = PowerUpBag.StoredSpeedPowerUp[0] == null || key != PowerUpBag.StoredSpeedPowerUp[0].GetComponent<powerUP>().ComboKey ? false : true;
+        full2 = PowerUpBag.StoredDeffensePowerUp[0] == null || key != PowerUpBag.StoredDeffensePowerUp[0].GetComponent<powerUP>().ComboKey ? false : true;
+        full3 = PowerUpBag.StoredAtackPowerUp[0] == null || key != PowerUpBag.StoredAtackPowerUp[0].GetComponent<powerUP>().ComboKey ? false : true;
         for (int i = 0; i < 4; i++)
         {
             if (PowerUpBag.ActiveSpeedPowerUp[i] == null && full1)
@@ -304,9 +304,9 @@ public class Movement : MonoBehaviour
 
         if (bonification > 1)
         {
-            if(PowerUpBag.StoredSpeedPowerUp[0] != null) PowerUpBag.StoredSpeedPowerUp[0].duration *= bonification;
-            if(PowerUpBag.StoredDeffensePowerUp[0] != null) PowerUpBag.StoredDeffensePowerUp[0].duration *= bonification;
-            if(PowerUpBag.StoredAtackPowerUp[0] != null) PowerUpBag.StoredAtackPowerUp[0].duration *= bonification;
+            if (PowerUpBag.StoredSpeedPowerUp[0] != null) PowerUpBag.StoredSpeedPowerUp[0].duration *= bonification;
+            if (PowerUpBag.StoredDeffensePowerUp[0] != null) PowerUpBag.StoredDeffensePowerUp[0].duration *= bonification;
+            if (PowerUpBag.StoredAtackPowerUp[0] != null) PowerUpBag.StoredAtackPowerUp[0].duration *= bonification;
         }
 
         Color color;
@@ -357,19 +357,26 @@ public class Movement : MonoBehaviour
     {
         for (int i = PowerUpBag.ActiveAtackPowerUpSprite.Length - 1; i >= 0; i--)
         {
-            if(PowerUpBag.ActiveSpeedPowerUp[i] != null && PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color.a > 0 && PowerUpBag.ActiveSpeedPowerUp[i].activationTime != 0)
+            if (PowerUpBag.ActiveSpeedPowerUp[i] != null && PowerUpBag.ActiveSpeedPowerUp[i].activationTime != 0 && PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color.a > 0)
             {
                 Color c = PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color;
                 c.a = (((PowerUpBag.ActiveSpeedPowerUp[i].duration - (Time.realtimeSinceStartup - PowerUpBag.ActiveSpeedPowerUp[i].activationTime))) / PowerUpBag.ActiveSpeedPowerUp[i].duration);
                 PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color = c;
+
+                if (PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color.a <= 0)
+                {
+                    PowerUpBag.ActiveSpeedPowerUp[i] = null;
+                    if (i != 0) PowerUpBag.ActiveSpeedPowerUp[i - 1].activationTime = Time.realtimeSinceStartup;
+                }
             }
-            else if(PowerUpBag.ActiveSpeedPowerUp[i] != null && PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color.a <= 0)
+            else if (PowerUpBag.ActiveSpeedPowerUp[i] == null && PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color.a > 0)
             {
-                PowerUpBag.ActiveSpeedPowerUp[i] = null;
-                if (i != 0) PowerUpBag.ActiveSpeedPowerUp[i - 1].activationTime = Time.realtimeSinceStartup;
+                Color c = PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color;
+                c.a = 0.0f;
+                PowerUpBag.ActiveSpeedPowerUpSprite[i].GetComponent<Image>().color = c;
             }
 
-            if (PowerUpBag.ActiveDeffensePowerUp[i] != null && PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color.a > 0 && PowerUpBag.ActiveDeffensePowerUp[i].activationTime != 0)
+                if (PowerUpBag.ActiveDeffensePowerUp[i] != null && PowerUpBag.ActiveDeffensePowerUp[i].activationTime != 0 && PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color.a > 0)
             {
                 if (lives == 3)
                 {
@@ -383,21 +390,28 @@ public class Movement : MonoBehaviour
                     c.a = 0.0f;
                     PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color = c;
                 }
-            }
-            else if (PowerUpBag.ActiveDeffensePowerUp[i] != null && PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color.a <= 0)
-            {
-                PowerUpBag.ActiveDeffensePowerUp[i] = null;
-                if (i != 0)
+
+                if (PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color.a <= 0)
                 {
-                    PowerUpBag.ActiveDeffensePowerUp[i - 1].activationTime = Time.realtimeSinceStartup;
-                    lives = 3;
+                    PowerUpBag.ActiveDeffensePowerUp[i] = null;
+                    if (i != 0)
+                    {
+                        PowerUpBag.ActiveDeffensePowerUp[i - 1].activationTime = Time.realtimeSinceStartup;
+                        lives = 3;
+                    }
+                    else lives = 2;
                 }
-                else lives = 2;
+            }
+            else if (PowerUpBag.ActiveDeffensePowerUp[i] == null && PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color.a > 0)
+            {
+                Color c = PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color;
+                c.a = 0.0f;
+                PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color = c;
             }
 
-            if (PowerUpBag.ActiveAtackPowerUp[i] != null && PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color.a > 0 && PowerUpBag.ActiveAtackPowerUp[i].activationTime != 0)
+            if (PowerUpBag.ActiveAtackPowerUp[i] != null && PowerUpBag.ActiveAtackPowerUp[i].activationTime != 0 && PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color.a > 0)
             {
-                if(Input.GetKeyDown(KeyCode.Mouse0))
+                if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
                     Instantiate(Resources.Load("ResPrefabs/Projectile"));
                     PowerUpBag.ActiveAtackPowerUp[i].duration *= 0.75f;
@@ -405,11 +419,18 @@ public class Movement : MonoBehaviour
                 Color c = PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color;
                 c.a = (((PowerUpBag.ActiveAtackPowerUp[i].duration - (Time.realtimeSinceStartup - PowerUpBag.ActiveAtackPowerUp[i].activationTime))) / PowerUpBag.ActiveAtackPowerUp[i].duration);
                 PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color = c;
+
+                if (PowerUpBag.ActiveAtackPowerUp[i] != null && PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color.a <= 0)
+                {
+                    PowerUpBag.ActiveAtackPowerUp[i] = null;
+                    if (i != 0) PowerUpBag.ActiveAtackPowerUp[i - 1].activationTime = Time.realtimeSinceStartup;
+                }
             }
-            else if (PowerUpBag.ActiveAtackPowerUp[i] != null && PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color.a <= 0)
+            else if (PowerUpBag.ActiveAtackPowerUp[i] == null && PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color.a > 0)
             {
-                PowerUpBag.ActiveAtackPowerUp[i] = null;
-                if (i != 0) PowerUpBag.ActiveAtackPowerUp[i - 1].activationTime = Time.realtimeSinceStartup;
+                Color c = PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color;
+                c.a = 0.0f;
+                PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color = c;
             }
         }
     }

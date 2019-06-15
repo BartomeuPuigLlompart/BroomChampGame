@@ -15,7 +15,6 @@ public class randomPowerUp : MonoBehaviour {
         int powerUpNum = gameObject.transform.childCount;
         powerUpType[] pType = new powerUpType[powerUpNum];
         GameObject[] aux = new GameObject[powerUpNum];
-        Debug.Log(powerUpNum);
         for (int i = 0; i < powerUpNum; i++)
         {
             pType[i] = (powerUpType)Random.Range(0.0f, 3.0f);
@@ -42,6 +41,7 @@ public class randomPowerUp : MonoBehaviour {
                 case powerUpType.ATACK:
                     aux[i].AddComponent<AtackPowerUp>();
                     aux[i].GetComponent<AtackPowerUp>().ComboKey = (powerUP.comboKey)Random.Range(0.0f, 4.0f);
+                    aux[i].GetComponent<AtackPowerUp>().duration = 7;
                     switch (aux[i].GetComponent<AtackPowerUp>().ComboKey)
                     {
                         case powerUP.comboKey.UP:
@@ -61,6 +61,7 @@ public class randomPowerUp : MonoBehaviour {
                 case powerUpType.DEFFENSE:
                     aux[i].AddComponent<DefensePowerUp>();
                     aux[i].GetComponent<DefensePowerUp>().ComboKey = (powerUP.comboKey)Random.Range(0.0f, 4.0f);
+                    aux[i].GetComponent<DefensePowerUp>().duration = 10;
                     switch (aux[i].GetComponent<DefensePowerUp>().ComboKey)
                     {
                         case powerUP.comboKey.UP:
@@ -80,6 +81,7 @@ public class randomPowerUp : MonoBehaviour {
                 case powerUpType.SPEED:
                     aux[i].AddComponent<SpeedPowerUp>();
                     aux[i].GetComponent<SpeedPowerUp>().ComboKey = (powerUP.comboKey)Random.Range(0.0f, 4.0f);
+                    aux[i].GetComponent<SpeedPowerUp>().duration = 4.0f;
                     switch (aux[i].GetComponent<SpeedPowerUp>().ComboKey)
                     {
                         case powerUP.comboKey.UP:
