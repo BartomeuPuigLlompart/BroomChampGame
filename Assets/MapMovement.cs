@@ -12,6 +12,7 @@ public class MapMovement : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        gameObject.AddComponent<SpeedIA>();
         mapFragments = new GameObject[10];
         initialSpeed = new Vector3(-4f, 0, 0);
         mapSpeed = initialSpeed;

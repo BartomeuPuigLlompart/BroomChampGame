@@ -18,7 +18,7 @@ public class checkBorderCollision : MonoBehaviour {
         if (other.gameObject == player && colInmu + 1.5f < Time.realtimeSinceStartup)
         {
             player.GetComponent<Movement>().lives--;
-            if (player.GetComponent<Movement>().lives == 1) StartCoroutine(player.GetComponent<Movement>().rideBroom(5.0f));
+            if (player.GetComponent<Movement>().lives == 1) player.GetComponent<Movement>().lowHealthRef = Time.realtimeSinceStartup;
             else if (player.GetComponent<Movement>().lives == 0) player.GetComponent<Movement>().killPlayer();
             colInmu = Time.realtimeSinceStartup;
         }

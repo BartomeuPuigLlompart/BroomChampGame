@@ -8,29 +8,42 @@ public class projectile : MonoBehaviour {
 
     Vector3 direction;
     Vector3 startPos;
-    Rigidbody rb;
+    GameObject target;
     private GameObject explosion;
-	void Start () {
-        Vector3 LocalPos = transform.position;
+    bool proximity;
+    float distAux = 30.0f;
+    void Start () {
+        proximity = false;
         transform.SetParent(GameObject.Find("Player").transform.GetChild(2));
-        transform.localPosition = LocalPos;
-        direction = Camera.main.ScreenToWorldPoint(Input.mousePosition - new Vector3(0, 0, GameObject.Find("Main Camera").transform.position.z));
-        direction = new Vector3(direction.x - 0.25f, direction.y, 0.0f); 
-        transform.LookAt(direction);
+        transform.localPosition = Vector3.zero;
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("enemy");
+        if (enemies.Length > 0)
+        {
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                if (Vector3.Distance(transform.position, enemies[i].transform.position) < distAux)
+                {
+                    distAux = Vector3.Distance(transform.position, enemies[i].transform.position);
+                    target = enemies[i];
+                    transform.LookAt(target.transform.position);
+                }
+            }
+        }
         StartCoroutine(stopParticle(4.0f));
         transform.SetParent(null);
-        rb = GetComponent<Rigidbody>();
-        startPos = transform.position;
-        rb.velocity = transform.forward * 5;
         explosion = transform.GetChild(1).gameObject;
         explosion.SetActive(false);
     }
 	
 	// Update is called once per frame
 	void Update () {
-        rb.AddForce(transform.forward * 10);
-        rb.AddForce(MapMovement.Instance.mapSpeed);
-	}
+        if (target == null) Destroy(gameObject);
+        else
+        {
+            transform.position = Vector3.Lerp(target.transform.position, transform.position, 20 * Time.deltaTime);
+            if (Vector3.Distance(transform.position, target.transform.position) < 1f) killEnemy();
+        }
+    }
 
     IEnumerator stopParticle(float time)
     {
@@ -40,14 +53,12 @@ public class projectile : MonoBehaviour {
         Destroy(this.gameObject);
     }
 
-    private void OnTriggerEnter(Collider other)
+    void killEnemy()
     {
-        if(other.gameObject.tag != "Player")
-        {
-            explosion.SetActive(true);
-            explosion.transform.SetParent(GameObject.Find("Map").transform);
-            transform.GetComponent<Collider>().enabled = false;
-            transform.GetChild(0).gameObject.SetActive(false);
-        }
+        explosion.SetActive(true);
+        explosion.transform.SetParent(GameObject.Find("Map").transform);
+        transform.GetComponent<Collider>().enabled = false;
+        transform.GetChild(0).gameObject.SetActive(false);
+        Destroy(target.gameObject);
     }
 }
