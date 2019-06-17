@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapMovement : MonoBehaviour {
 
@@ -9,9 +10,11 @@ public class MapMovement : MonoBehaviour {
     Rigidbody rb;
     public static MapMovement Instance;
     private GameObject[] mapFragments;
+    private GameObject canvas;
 
     // Use this for initialization
     void Start () {
+        canvas = GameObject.Find("Canvas");
         gameObject.AddComponent<SpeedIA>();
         mapFragments = new GameObject[10];
         initialSpeed = new Vector3(-4f, 0, 0);
@@ -46,6 +49,11 @@ public class MapMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (Input.GetKeyDown(KeyCode.Escape) && !canvas.transform.GetChild(3).gameObject.activeSelf)
+        {
+            Time.timeScale = 0.0f;
+            canvas.transform.GetChild(3).gameObject.SetActive(true);
+        }
         rb.velocity = (mapSpeed);
     }
 }

@@ -18,7 +18,7 @@ public class enemyMovement : MonoBehaviour {
         {
             move = true;
         }
-        if (move)
+        if (move && Time.timeScale == 1.0f)
         {
             transform.position += new Vector3(-0.03f, 0, 0);
             if (Vector3.Distance(transform.position, Player.transform.position) > 25.0f) Destroy(gameObject);

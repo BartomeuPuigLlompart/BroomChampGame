@@ -64,6 +64,7 @@
     <Compile Include="Assets\checkBorderCollision.cs" />
     <Compile Include="Assets\enemyMovement.cs" />
     <Compile Include="Assets\MapMovement.cs" />
+    <Compile Include="Assets\MenuStuff\Menuctrl.cs" />
     <Compile Include="Assets\Movement.cs" />
     <Compile Include="Assets\NeonShapes\SelfDestroyScript.cs" />
     <Compile Include="Assets\powerUP.cs" />
