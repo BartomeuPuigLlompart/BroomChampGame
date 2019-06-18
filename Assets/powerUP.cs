@@ -11,10 +11,14 @@ public class powerUP : MonoBehaviour {
     public float activationTime;
     ParticleSystem effect;
     GameObject player;
-    public Sprite image; 
+    public Sprite image;
+    AudioSource source;
     // Use this for initialization
     void Start()
     {
+        gameObject.AddComponent<AudioSource>();
+        source = transform.GetComponent<AudioSource>();
+        source.clip = Resources.Load<AudioClip>("Music/effects/power_up");
         activationTime = 0.0f;
         effect = transform.GetChild(0).GetComponent<ParticleSystem>();
         effect.enableEmission = false;
@@ -25,6 +29,7 @@ public class powerUP : MonoBehaviour {
     {
         if (other.gameObject == player)
         {
+            source.Play();
             effect.enableEmission = true;
             power_UP_Effect();
             this.GetComponent<MeshRenderer>().enabled = false;

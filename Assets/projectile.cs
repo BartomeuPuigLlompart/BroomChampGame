@@ -10,6 +10,7 @@ public class projectile : MonoBehaviour {
     Vector3 startPos;
     GameObject target;
     private GameObject explosion;
+    private AudioSource source;
     bool proximity;
     float distAux = 30.0f;
     void Start () {
@@ -17,6 +18,8 @@ public class projectile : MonoBehaviour {
         transform.SetParent(GameObject.Find("Player").transform.GetChild(2));
         transform.localPosition = Vector3.zero;
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("enemy");
+        source = GameObject.Find("Player").transform.GetChild(2).GetComponent<AudioSource>();
+        source.Play();
         if (enemies.Length > 0)
         {
             for (int i = 0; i < enemies.Length; i++)

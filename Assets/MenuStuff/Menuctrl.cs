@@ -104,4 +104,10 @@ public class Menuctrl : MonoBehaviour {
         AudioListener.pause = !AudioListener.pause;
     }
 
+    public void SetVolume(float volume)
+    {
+        audioManager.AudioManager.audioSource.volume = volume;
+
+    }
+
 }

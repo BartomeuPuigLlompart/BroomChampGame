@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\audioManager.cs" />
     <Compile Include="Assets\checkBorderCollision.cs" />
     <Compile Include="Assets\endingScript.cs" />
     <Compile Include="Assets\enemyMovement.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Assets\SampleScenes\Scripts\SlowMoButton.cs" />
     <Compile Include="Assets\SpeedIA.cs" />
     <Compile Include="Assets\SpeedRender.cs" />
+    <Compile Include="Assets\splashScreen.cs" />
     <Compile Include="Assets\turbo.cs" />
     <None Include="Assets\SampleScenes\Shaders\Skybox-Procedural.shader" />
     <Reference Include="UnityEditor.StandardEvents">

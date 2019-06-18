@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 52b7d70b1de7c4ce09662b77c14d9fda, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.1430499, g: 0.25276715, b: 0.31216136, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6138,45 +6138,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 1124934453182284, guid: a6f3dc5592d1e1444aa20be922de24a8, type: 2}
-      propertyPath: m_Name
-      value: player_model
-      objectReference: {fileID: 0}
-    - target: {fileID: 1124934453182284, guid: a6f3dc5592d1e1444aa20be922de24a8, type: 2}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 1622062714589550, guid: a6f3dc5592d1e1444aa20be922de24a8, type: 2}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 1622062714589550, guid: a6f3dc5592d1e1444aa20be922de24a8, type: 2}
-      propertyPath: m_Name
-      value: Broom
-      objectReference: {fileID: 0}
-    - target: {fileID: 1104406372694240, guid: a6f3dc5592d1e1444aa20be922de24a8, type: 2}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 1330289032638330, guid: a6f3dc5592d1e1444aa20be922de24a8, type: 2}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 1525467777243886, guid: a6f3dc5592d1e1444aa20be922de24a8, type: 2}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 1792613933890416, guid: a6f3dc5592d1e1444aa20be922de24a8, type: 2}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 1009974267736780, guid: a6f3dc5592d1e1444aa20be922de24a8, type: 2}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 4742606522210858, guid: a6f3dc5592d1e1444aa20be922de24a8, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0.1152692
+    - target: {fileID: 82858190861691948, guid: a6f3dc5592d1e1444aa20be922de24a8,
+        type: 2}
+      propertyPath: m_Volume
+      value: 0.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6f3dc5592d1e1444aa20be922de24a8, type: 2}

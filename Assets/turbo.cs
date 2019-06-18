@@ -9,8 +9,13 @@ public class turbo : MonoBehaviour {
     public static float turboRef;
     public static float turboMax = 2.0f;
 
+    private AudioSource source;
+
 	// Use this for initialization
 	void Start () {
+        gameObject.AddComponent<AudioSource>();
+        source = GetComponent<AudioSource>();
+        source.clip = Resources.Load<AudioClip>("Music/effects/item");
         effect = transform.GetChild(0).GetComponent<ParticleSystem>();
         effect.enableEmission = false;
         player = GameObject.Find("Player");
@@ -20,6 +25,7 @@ public class turbo : MonoBehaviour {
     {
         if (other.gameObject == player)
         {
+            source.Play();
             turboRef = Time.realtimeSinceStartup;
             effect.enableEmission = true;
             this.GetComponent<MeshRenderer>().enabled = false;

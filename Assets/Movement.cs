@@ -27,6 +27,8 @@ public class Movement : MonoBehaviour
     private GameObject shield;
     public float lowHealthRef;
 
+    private AudioSource source;
+
     public static powerUpBag PowerUpBag;
     Rigidbody rb;
     private Vector3 moveDirection;
@@ -40,6 +42,7 @@ public class Movement : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        source = GetComponent<AudioSource>();
         rb = this.gameObject.GetComponent<Rigidbody>();
         moveDirection = Vector3.zero;
         VerticalMove = Input.GetAxis("Vertical") * (1 / Mathf.Abs(Input.GetAxis("Vertical")));
@@ -199,6 +202,7 @@ public class Movement : MonoBehaviour
 
     private void swapStoredPowerUps(powerUP.comboKey key)
     {
+        source.Play();
         bool full1, full2, full3;
         int bonification = 0;
         full1 = PowerUpBag.StoredSpeedPowerUp[0] == null || key != PowerUpBag.StoredSpeedPowerUp[0].GetComponent<powerUP>().ComboKey ? false : true;
