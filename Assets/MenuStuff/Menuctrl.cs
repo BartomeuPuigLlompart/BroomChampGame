@@ -30,7 +30,8 @@ public class Menuctrl : MonoBehaviour {
     public void LoadScene(string sceneName)
     {
         Time.timeScale = 1.0f;
-        SceneManager.LoadScene(sceneName);
+        //SceneManager.LoadScene(sceneName);
+        loadScreen.Instancia.CargarEscena(sceneName);
     }
 
     public void showOptions()

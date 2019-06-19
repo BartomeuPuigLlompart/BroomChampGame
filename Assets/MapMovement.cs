@@ -96,6 +96,7 @@ public class MapMovement : MonoBehaviour {
 
     public void checkPuzzle()
     {
+        bool answer;
         GameObject cloneFrag;
         if (transform.GetChild(0).GetChild(transform.GetChild(0).childCount - 2).gameObject.name.Substring(0, 9) == "Conection")
             Destroy(transform.GetChild(0).GetChild(transform.GetChild(0).childCount - 2).gameObject);
@@ -106,12 +107,14 @@ public class MapMovement : MonoBehaviour {
         cloneFrag.transform.SetParent(transform.GetChild(0).transform);
         cloneFrag.transform.SetSiblingIndex(2);
         transform.GetChild(0).GetChild(1).transform.localPosition += new Vector3(150, 0, 0);
+            answer = false;
         }
         else
         {
             cloneFrag = transform.GetChild(0).GetChild(3).gameObject;
             Destroy(transform.GetChild(0).GetChild(2).gameObject);
             cloneFrag.transform.localPosition += new Vector3(0, 150, 0);
+            answer = true;
         }
         
         cloneFrag.transform.localPosition = transform.GetChild(0).GetChild(transform.GetChild(0).childCount - 1).transform.localPosition + new Vector3(50, 0, 0);
@@ -122,11 +125,12 @@ public class MapMovement : MonoBehaviour {
         conectionFrag.transform.localPosition = cloneFrag.transform.localPosition + new Vector3(100, 0, 0);
         conectionFrag.transform.SetAsLastSibling();
 
-        GameObject.Find("Canvas").transform.GetChild(5).gameObject.SetActive(false);
+        StartCoroutine(checkPoint.Instance.FadeOff(answer));
     }
 
     public void checkSurvival()
     {
+        bool answer;
         GameObject cloneFrag;
         if (transform.GetChild(0).GetChild(transform.GetChild(0).childCount - 2).gameObject.name.Substring(0, 9) == "Conection")
             Destroy(transform.GetChild(0).GetChild(transform.GetChild(0).childCount - 2).gameObject);
@@ -137,12 +141,14 @@ public class MapMovement : MonoBehaviour {
             cloneFrag.transform.SetParent(transform.GetChild(0).transform);
             cloneFrag.transform.SetSiblingIndex(2);
             transform.GetChild(0).GetChild(1).transform.localPosition += new Vector3(150, 0, 0);
+            answer = false;
         }
         else
         {
             cloneFrag = transform.GetChild(0).GetChild(3).gameObject;
             Destroy(transform.GetChild(0).GetChild(2).gameObject);
             cloneFrag.transform.localPosition += new Vector3(0, 150, 0);
+            answer = true;
         }
 
         cloneFrag.transform.localPosition = transform.GetChild(0).GetChild(transform.GetChild(0).childCount - 1).transform.localPosition + new Vector3(50, 0, 0);
@@ -153,6 +159,6 @@ public class MapMovement : MonoBehaviour {
         conectionFrag.transform.localPosition = cloneFrag.transform.localPosition + new Vector3(100, 0, 0);
         conectionFrag.transform.SetAsLastSibling();
 
-        GameObject.Find("Canvas").transform.GetChild(5).gameObject.SetActive(false);
+        StartCoroutine(checkPoint.Instance.FadeOff(answer));
     }
 }

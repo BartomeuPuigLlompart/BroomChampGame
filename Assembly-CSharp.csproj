@@ -66,6 +66,7 @@
     <Compile Include="Assets\checkPoint.cs" />
     <Compile Include="Assets\endingScript.cs" />
     <Compile Include="Assets\enemyMovement.cs" />
+    <Compile Include="Assets\loadScreen.cs" />
     <Compile Include="Assets\MapMovement.cs" />
     <Compile Include="Assets\MenuStuff\Menuctrl.cs" />
     <Compile Include="Assets\Movement.cs" />
