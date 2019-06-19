@@ -31,7 +31,8 @@ public class MapMovement : MonoBehaviour {
         mapFragments[0] = Instantiate(Resources.Load("ResPrefabs/Map Fragments/Fragment_1") as GameObject);
         mapFragments[0].transform.SetParent(transform.GetChild(0).transform);
         mapFragments[0].transform.localPosition = Vector3.zero;
-        mapFragments[0].AddComponent<SpeedRender>();
+        if(GameMode == gameMode.SPEED )mapFragments[0].AddComponent<SpeedRender>();
+        else mapFragments[0].AddComponent<PuzzleSruvivalRenderer>();
 
         List<int> fragmNumList = new List<int>();
 
@@ -61,7 +62,7 @@ public class MapMovement : MonoBehaviour {
                 GameObject conectionFrag;
                 conectionFrag = Instantiate(Resources.Load("ResPrefabs/Map Fragments/Conection Fragment") as GameObject);
                 conectionFrag.transform.SetParent(transform.GetChild(0).transform);
-                conectionFrag.transform.localPosition = new Vector3(lastXPos, 0.0f, 0.0f);
+                conectionFrag.transform.localPosition = new Vector3(lastXPos, 0.0f, 0.0f);              
                 for (int i = 1; i < 5; i++)
                 {
                     lastXPos += 50.0f;
@@ -73,6 +74,7 @@ public class MapMovement : MonoBehaviour {
                     mapFragments[i] = Instantiate(Resources.Load(directory) as GameObject);
                     mapFragments[i].transform.SetParent(transform.GetChild(0).transform);
                     mapFragments[i].transform.localPosition = new Vector3(lastXPos, -150.0f, 0.0f);
+                    mapFragments[i].AddComponent<PuzzleSruvivalRenderer>();
                     lastXPos += 100.0f;
                 }
                 conectionFrag.transform.SetAsLastSibling();

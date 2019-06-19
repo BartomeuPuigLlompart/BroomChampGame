@@ -72,6 +72,7 @@
     <Compile Include="Assets\NeonShapes\SelfDestroyScript.cs" />
     <Compile Include="Assets\powerUP.cs" />
     <Compile Include="Assets\projectile.cs" />
+    <Compile Include="Assets\PuzzleSruvivalRenderer.cs" />
     <Compile Include="Assets\randomPowerUp.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\PauseMenu.cs" />
