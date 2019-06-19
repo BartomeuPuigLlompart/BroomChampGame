@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Assets\audioManager.cs" />
     <Compile Include="Assets\checkBorderCollision.cs" />
+    <Compile Include="Assets\checkPoint.cs" />
     <Compile Include="Assets\endingScript.cs" />
     <Compile Include="Assets\enemyMovement.cs" />
     <Compile Include="Assets\MapMovement.cs" />

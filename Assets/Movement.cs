@@ -131,7 +131,8 @@ public class Movement : MonoBehaviour
         moveDirection = Vector3.zero;
         VerticalMovement();
         HorizontalMovement();
-        transform.position = new Vector3(transform.position.x, Mathf.Round(transform.position.y), 0);
+        transform.position = new Vector3(transform.position.x, Mathf.Round(transform.position.y) + GameObject.Find("Map").transform.position.y, 0);
+        Debug.Log(GameObject.Find("Map").transform.position.y);
     }
 
     void VerticalMovement()
@@ -170,7 +171,7 @@ public class Movement : MonoBehaviour
 
     void HorizontalMovement()
     {
-        if(lives > 1)rb.AddForce(new Vector3(Input.GetAxis("Horizontal") * speedMultiplier, 0, 0));
+        if (lives > 1) rb.AddForce(new Vector3(Input.GetAxis("Horizontal") * speedMultiplier, 0, 0));
     }
 
     private void powerUpBagUpdate()
@@ -182,7 +183,7 @@ public class Movement : MonoBehaviour
 
     private void checkCombo()
     {
-        if(Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             swapStoredPowerUps(powerUP.comboKey.UP);
         }
@@ -259,7 +260,7 @@ public class Movement : MonoBehaviour
                     {
                         powerUP aux = PowerUpBag.ActiveDeffensePowerUp[i - 1].GetComponent<powerUP>();
                         PowerUpBag.ActiveDeffensePowerUp[i - 1] = PowerUpBag.StoredDeffensePowerUp[0].GetComponent<powerUP>();
-                        c = PowerUpBag.ActiveDeffensePowerUpSprite[i - 1].GetComponent<Image>().color ;
+                        c = PowerUpBag.ActiveDeffensePowerUpSprite[i - 1].GetComponent<Image>().color;
                         c.a = 1.0f;
                         PowerUpBag.ActiveDeffensePowerUpSprite[i - 1].GetComponent<Image>().color = c;
                         PowerUpBag.ActiveDeffensePowerUp[i] = aux.GetComponent<powerUP>();
@@ -382,7 +383,7 @@ public class Movement : MonoBehaviour
                 }
             }
 
-                if (PowerUpBag.ActiveDeffensePowerUp[i] != null && PowerUpBag.ActiveDeffensePowerUp[i].activationTime != 0 && PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color.a > 0)
+            if (PowerUpBag.ActiveDeffensePowerUp[i] != null && PowerUpBag.ActiveDeffensePowerUp[i].activationTime != 0 && PowerUpBag.ActiveDeffensePowerUpSprite[i].GetComponent<Image>().color.a > 0)
             {
                 if (i != 0 && PowerUpBag.ActiveDeffensePowerUp[i - 1].activationTime != 0) PowerUpBag.ActiveDeffensePowerUp[i - 1].activationTime = 0.0f;
                 if (lives == 3)
@@ -457,7 +458,7 @@ public class Movement : MonoBehaviour
         {
             if (PowerUpBag.ActiveSpeedPowerUp[i] != null)
             {
-                if(lives > 1)
+                if (lives > 1)
                 {
                     MapMovement.Instance.mapSpeed = MapMovement.Instance.initialSpeed * 2;
                     HIGH_em.enableEmission = true;
@@ -472,7 +473,7 @@ public class Movement : MonoBehaviour
                     LOW_em.enableEmission = false;
                 }
             }
-            else if(i == 0)
+            else if (i == 0)
             {
                 if (Time.realtimeSinceStartup - turbo.turboRef > turbo.turboMax)
                 {
@@ -493,7 +494,7 @@ public class Movement : MonoBehaviour
                 }
                 else
                 {
-                    if(lives == 1)
+                    if (lives == 1)
                     {
                         MapMovement.Instance.mapSpeed = MapMovement.Instance.initialSpeed;
                         HIGH_em.enableEmission = false;
@@ -515,8 +516,36 @@ public class Movement : MonoBehaviour
         }
     }
 
+    public void extraAtack()
+    {
+        for (int i = PowerUpBag.ActiveAtackPowerUpSprite.Length - 1; i >= 0; i--)
+        {
+            if(PowerUpBag.ActiveAtackPowerUp[i] != null && PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color.a < 1)
+            {
+                Color c;
+                c = PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color;
+                c.a = 255;
+                PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color = c;
+                PowerUpBag.ActiveAtackPowerUp[i].activationTime = Time.realtimeSinceStartup;
+                return;
+            }
+            else if(i == 0)
+            {
+                transform.GetChild(2).gameObject.AddComponent<AtackPowerUp>();
+                PowerUpBag.ActiveAtackPowerUp[i] = transform.GetChild(2).gameObject.GetComponent<powerUP>();
+                Color c;
+                c = PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color;
+                c.a = 255;
+                PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color = c;
+                PowerUpBag.ActiveAtackPowerUp[i].activationTime = Time.realtimeSinceStartup;
+                PowerUpBag.ActiveAtackPowerUp[i].duration = 7;
+            }
+        }
+
+        }
+
     public void killPlayer()
     {
-        SceneManager.LoadScene("speed");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

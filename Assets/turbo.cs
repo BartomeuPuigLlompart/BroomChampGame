@@ -26,7 +26,8 @@ public class turbo : MonoBehaviour {
         if (other.gameObject == player)
         {
             source.Play();
-            turboRef = Time.realtimeSinceStartup;
+            if (MapMovement.GameMode == MapMovement.gameMode.SPEED) turboRef = Time.realtimeSinceStartup;
+            else if(MapMovement.GameMode == MapMovement.gameMode.SURVIVAL) player.GetComponent<Movement>().extraAtack();
             effect.enableEmission = true;
             this.GetComponent<MeshRenderer>().enabled = false;
             StartCoroutine(stopParticle(2));
