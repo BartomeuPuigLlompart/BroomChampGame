@@ -34,6 +34,7 @@ public class powerUP : MonoBehaviour {
             power_UP_Effect();
             this.GetComponent<MeshRenderer>().enabled = false;
             this.GetComponent<Collider>().enabled = false;
+            gameObject.transform.SetParent(GameObject.Find("Map").transform.GetChild(1));
             StartCoroutine(stopParticle(2));
         }
     }

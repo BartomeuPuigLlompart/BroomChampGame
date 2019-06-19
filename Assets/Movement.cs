@@ -132,7 +132,6 @@ public class Movement : MonoBehaviour
         VerticalMovement();
         HorizontalMovement();
         transform.position = new Vector3(transform.position.x, Mathf.Round(transform.position.y) + GameObject.Find("Map").transform.position.y, 0);
-        Debug.Log(GameObject.Find("Map").transform.position.y);
     }
 
     void VerticalMovement()
@@ -427,7 +426,7 @@ public class Movement : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     Instantiate(Resources.Load("ResPrefabs/Projectile"));
-                    PowerUpBag.ActiveAtackPowerUp[i].duration *= 0.75f;
+                    PowerUpBag.ActiveAtackPowerUp[i].duration *= 0.5f;
                 }
                 Color c = PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color;
                 c.a = (((PowerUpBag.ActiveAtackPowerUp[i].duration - (Time.realtimeSinceStartup - PowerUpBag.ActiveAtackPowerUp[i].activationTime))) / PowerUpBag.ActiveAtackPowerUp[i].duration);
@@ -538,7 +537,7 @@ public class Movement : MonoBehaviour
                 c.a = 255;
                 PowerUpBag.ActiveAtackPowerUpSprite[i].GetComponent<Image>().color = c;
                 PowerUpBag.ActiveAtackPowerUp[i].activationTime = Time.realtimeSinceStartup;
-                PowerUpBag.ActiveAtackPowerUp[i].duration = 7;
+                PowerUpBag.ActiveAtackPowerUp[i].duration = 2;
             }
         }
 
