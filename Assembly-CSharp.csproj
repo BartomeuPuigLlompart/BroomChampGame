@@ -64,6 +64,7 @@
     <Compile Include="Assets\audioManager.cs" />
     <Compile Include="Assets\checkBorderCollision.cs" />
     <Compile Include="Assets\checkPoint.cs" />
+    <Compile Include="Assets\Cinematics.cs" />
     <Compile Include="Assets\endingScript.cs" />
     <Compile Include="Assets\enemyMovement.cs" />
     <Compile Include="Assets\loadScreen.cs" />

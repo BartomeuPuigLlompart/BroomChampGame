@@ -31,8 +31,8 @@ public class SpeedIA : MonoBehaviour {
 
         if (MapMovement.GameMode == MapMovement.gameMode.SPEED)
         {
-            lowRange = 10.0f;
-            highRange = 30.0f;
+            lowRange = 15.0f;
+            highRange = 35.0f;
             iaDestination = 1000.0f;
         }
         else
@@ -68,7 +68,7 @@ public class SpeedIA : MonoBehaviour {
                 Rival[i].position += Rival[i].speed * Time.deltaTime;
                 if(MapMovement.GameMode != MapMovement.gameMode.SPEED && (int)Rival[i].position.x % 150 == 0 && (int)Rival[i].position.x != 0)
                 {
-                    if (Random.Range(1, 5) == 1) Rival[i].position += new Vector3(-125, 0, 0);
+                    if (Random.Range(1, 4) == 1) Rival[i].position += new Vector3(-125, 0, 0);
                     else Rival[i].position += new Vector3(1, 0, 0);
                 }
             }

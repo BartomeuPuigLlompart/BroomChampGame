@@ -6,7 +6,9 @@ public class creditsManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        StartCoroutine(endCredits(18.0f));
+        if (PlayerPrefs.GetInt("SpeedTrophie") == 1 && PlayerPrefs.GetInt("PuzzleTrophie") == 1 && PlayerPrefs.GetInt("SurvivalTrophie") == 1)
+            GameObject.Find("Canvas").transform.GetChild(1).gameObject.SetActive(true);
+            StartCoroutine(endCredits(18.0f));
 	}
 
     void Update()

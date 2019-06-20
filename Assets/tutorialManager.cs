@@ -13,13 +13,6 @@ public class tutorialManager : MonoBehaviour {
         Instance = this;
         tutorial = transform.GetChild(0).gameObject;
         tutorial.SetActive(false);
-
-        if (!PlayerPrefs.HasKey("Tuto1")) PlayerPrefs.SetInt("Tuto1", 0);
-        if (PlayerPrefs.GetInt("Tuto1") == 0)
-        {
-            tutorialManager.Instance.activateTutorial(1);
-            PlayerPrefs.SetInt("Tuto1", 1);
-        }
     }
 	
 	// Update is called once per frame
