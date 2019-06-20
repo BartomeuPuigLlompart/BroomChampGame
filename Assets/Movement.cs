@@ -42,6 +42,7 @@ public class Movement : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if (!PlayerPrefs.HasKey("Tuto8")) PlayerPrefs.SetInt("Tuto8", 0);
         source = GetComponent<AudioSource>();
         rb = this.gameObject.GetComponent<Rigidbody>();
         moveDirection = Vector3.zero;
@@ -128,6 +129,7 @@ public class Movement : MonoBehaviour
 
     void AxisMovement()
     {
+        if (Time.timeScale == 0.0f) return;
         moveDirection = Vector3.zero;
         VerticalMovement();
         HorizontalMovement();
@@ -202,6 +204,11 @@ public class Movement : MonoBehaviour
 
     private void swapStoredPowerUps(powerUP.comboKey key)
     {
+        if (PlayerPrefs.GetInt("Tuto8") == 0)
+        {
+            tutorialManager.Instance.activateTutorial(8);
+            PlayerPrefs.SetInt("Tuto8", 1);
+        }
         source.Play();
         bool full1, full2, full3;
         int bonification = 0;
@@ -545,6 +552,7 @@ public class Movement : MonoBehaviour
 
     public IEnumerator killPlayer(float time, int idxText)
     {
+        if (Time.timeScale == 0.0f) yield return null;
         canvasObject.transform.GetChild(5).gameObject.SetActive(true);
         canvasObject.transform.GetChild(5).GetChild(idxText).gameObject.SetActive(true);
         canvasObject.transform.GetChild(5).GetChild(2).GetComponent<Text>().text = canvasObject.transform.GetChild(5).GetChild(idxText).GetComponent<Text>().text;

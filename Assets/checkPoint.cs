@@ -16,10 +16,21 @@ public class checkPoint : MonoBehaviour {
         Instance = this;
        fadeImg = GameObject.Find("Canvas").transform.GetChild(6).GetComponent<Image>();
         originalColor = fadeImg.color;
+        originalColor.r = 206;
+        originalColor.g = 177;
+        originalColor.b = 88;
+        originalColor.a = 0;
+        fadeImg.color = originalColor;
+        if (!PlayerPrefs.HasKey("Tuto9")) PlayerPrefs.SetInt("Tuto9", 0);
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (PlayerPrefs.GetInt("Tuto9") == 0)
+        {
+            tutorialManager.Instance.activateTutorial(9);
+            PlayerPrefs.SetInt("Tuto9", 1);
+        }
         GameObject.Find("Canvas").transform.GetChild(6).gameObject.SetActive(true);
         GetComponent<Collider>().enabled = false;
         StartCoroutine(Fade());

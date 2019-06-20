@@ -89,6 +89,7 @@
     <Compile Include="Assets\splashScreen.cs" />
     <Compile Include="Assets\trophiesManager.cs" />
     <Compile Include="Assets\turbo.cs" />
+    <Compile Include="Assets\tutorialManager.cs" />
     <None Include="Assets\SampleScenes\Shaders\Skybox-Procedural.shader" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/documents enti/projecte 2-rec/Broom Champ/BroomChampGame/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

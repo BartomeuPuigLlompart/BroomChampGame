@@ -26,6 +26,9 @@ public class powerUP : MonoBehaviour {
             effect.enableEmission = false;
         }
         player = GameObject.Find("Player");
+        if (!PlayerPrefs.HasKey("Tuto5")) PlayerPrefs.SetInt("Tuto5", 0);
+        if (!PlayerPrefs.HasKey("Tuto6")) PlayerPrefs.SetInt("Tuto6", 0);
+        if (!PlayerPrefs.HasKey("Tuto7")) PlayerPrefs.SetInt("Tuto7", 0);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -56,6 +59,11 @@ public class SpeedPowerUp : powerUP
 {
 
     public override void power_UP_Effect() {
+        if (PlayerPrefs.GetInt("Tuto5") == 0)
+        {
+            tutorialManager.Instance.activateTutorial(5);
+            PlayerPrefs.SetInt("Tuto5", 1);
+        }
         bool full = true;
         for (int i = 0; i < 4; i++)
         {
@@ -81,6 +89,11 @@ public class DefensePowerUp : powerUP
 
     public override void power_UP_Effect()
     {
+        if (PlayerPrefs.GetInt("Tuto6") == 0)
+        {
+            tutorialManager.Instance.activateTutorial(6);
+            PlayerPrefs.SetInt("Tuto6", 1);
+        }
         bool full = true;
         for (int i = 0; i < 4; i++)
         {
@@ -106,6 +119,11 @@ public class AtackPowerUp : powerUP
 
     public override void power_UP_Effect()
     {
+        if (PlayerPrefs.GetInt("Tuto7") == 0)
+        {
+            tutorialManager.Instance.activateTutorial(7);
+            PlayerPrefs.SetInt("Tuto7", 1);
+        }
         bool full = true;
         for (int i = 0; i < 4; i++)
         {
