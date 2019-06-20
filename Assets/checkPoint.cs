@@ -14,19 +14,20 @@ public class checkPoint : MonoBehaviour {
     private void Start()
     {
         Instance = this;
-       fadeImg = GameObject.Find("Canvas").transform.GetChild(5).GetComponent<Image>();
+       fadeImg = GameObject.Find("Canvas").transform.GetChild(6).GetComponent<Image>();
         originalColor = fadeImg.color;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        GameObject.Find("Canvas").transform.GetChild(5).gameObject.SetActive(true);
+        GameObject.Find("Canvas").transform.GetChild(6).gameObject.SetActive(true);
         GetComponent<Collider>().enabled = false;
         StartCoroutine(Fade());
     }
 
     IEnumerator Fade()
     {
+
         Color c = fadeImg.color;
         c.a = 0.0f;
 

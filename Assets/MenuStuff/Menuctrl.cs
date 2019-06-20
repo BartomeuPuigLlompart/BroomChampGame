@@ -8,7 +8,6 @@ public class Menuctrl : MonoBehaviour {
 
     public GameObject Principal_Menu;
     public GameObject Options_Menu;
-    public GameObject Skins_Menu;
     public GameObject Chapters_Menu;
 
     Resolution[] resolutions;
@@ -39,7 +38,6 @@ public class Menuctrl : MonoBehaviour {
         Principal_Menu.SetActive(false);
         Chapters_Menu.SetActive(false);
         Options_Menu.SetActive(true);
-        Skins_Menu.SetActive(false);
     }
 
     public void SetResolution(int resolutionIndex)
@@ -58,7 +56,6 @@ public class Menuctrl : MonoBehaviour {
         Principal_Menu.SetActive(true);
         Options_Menu.SetActive(false);
         Chapters_Menu.SetActive(false);
-        Skins_Menu.SetActive(false);
     }
 
     public void showChapterMenu()
@@ -66,15 +63,6 @@ public class Menuctrl : MonoBehaviour {
         Principal_Menu.SetActive(false);
         Options_Menu.SetActive(false);
         Chapters_Menu.SetActive(true);
-        Skins_Menu.SetActive(false);
-    }
-
-    public void showSkinsMenu()
-    {
-        Principal_Menu.SetActive(false);
-        Options_Menu.SetActive(false);
-        Chapters_Menu.SetActive(false);
-        Skins_Menu.SetActive(true);
     }
 
     public void ExitGameBtn()
@@ -85,6 +73,7 @@ public class Menuctrl : MonoBehaviour {
     public void resumeGame()
     {
         Time.timeScale = 1.0f;
+        GameObject.Find("Canvas").transform.GetChild(6).gameObject.SetActive(true);
         gameObject.SetActive(false);
     }
 

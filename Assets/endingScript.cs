@@ -21,6 +21,20 @@ public class endingScript : MonoBehaviour {
         {
             message.SetActive(true);
             message.transform.GetChild(1).GetComponent<Text>().text = "You finished " + canvas.transform.GetChild(2).gameObject.GetComponent<Text>().text;
+            if (canvas.transform.GetChild(2).gameObject.GetComponent<Text>().text.Substring(0, 1) == "1") {
+                switch (SceneManager.GetActiveScene().name)
+                {
+                    case "speed":
+                        PlayerPrefs.SetInt("SpeedTrophie", 1);
+                        break;
+                    case "puzzle":
+                        PlayerPrefs.SetInt("PuzzleTrophie", 1);
+                        break;
+                    case "survival":
+                        PlayerPrefs.SetInt("SurvivalTrophie", 1);
+                        break;
+                }
+                    }
             StartCoroutine(backToMenu(3.0f));
         }
     }
@@ -29,6 +43,9 @@ public class endingScript : MonoBehaviour {
     {
         yield return new WaitForSeconds(time);
 
-        SceneManager.LoadScene("Principal Menu");
+        if(PlayerPrefs.GetInt("SpeedTrophie") == 1 && PlayerPrefs.GetInt("PuzzleTrophie") == 1 && PlayerPrefs.GetInt("SurvivalTrophie") == 1)
+            loadScreen.Instancia.CargarEscena("Credits");
+        else
+            loadScreen.Instancia.CargarEscena("Principal Menu");
     }
 }

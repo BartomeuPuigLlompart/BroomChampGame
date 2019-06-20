@@ -20,8 +20,11 @@ public class powerUP : MonoBehaviour {
         source = transform.GetComponent<AudioSource>();
         source.clip = Resources.Load<AudioClip>("Music/effects/power_up");
         activationTime = 0.0f;
-        effect = transform.GetChild(0).GetComponent<ParticleSystem>();
-        effect.enableEmission = false;
+        if (transform.childCount != 0)
+        {
+            effect = transform.GetChild(0).GetComponent<ParticleSystem>();
+            effect.enableEmission = false;
+        }
         player = GameObject.Find("Player");
     }
 
@@ -68,7 +71,7 @@ public class SpeedPowerUp : powerUP
                 return;
             }
         }
-        if (full) GameObject.Find("Player").GetComponent<Movement>().killPlayer();
+        if (full) StartCoroutine(GameObject.Find("Player").GetComponent<Movement>().killPlayer(3.0f, 3));
     }
 
 }
@@ -93,7 +96,7 @@ public class DefensePowerUp : powerUP
                 break;
             }
         }
-        if (full) GameObject.Find("Player").GetComponent<Movement>().killPlayer();
+        if (full) StartCoroutine(GameObject.Find("Player").GetComponent<Movement>().killPlayer(3.0f, 3));
     }
 
 }
@@ -118,7 +121,7 @@ public class AtackPowerUp : powerUP
                 break;
             }
         }
-        if (full) GameObject.Find("Player").GetComponent<Movement>().killPlayer();
+        if (full) StartCoroutine(GameObject.Find("Player").GetComponent<Movement>().killPlayer(3.0f, 3));
     }
 
 }

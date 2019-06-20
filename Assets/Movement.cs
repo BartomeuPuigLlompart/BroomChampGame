@@ -123,7 +123,7 @@ public class Movement : MonoBehaviour
         powerUpBagUpdate();
         actualLivesConsec();
         if (lives == 1 && lowHealthRef + 5 < Time.realtimeSinceStartup) lives = 2;
-        if (transform.position.x < -13 - 0f || transform.position.x > 13) killPlayer();
+        if (transform.position.x < -13 - 0f || transform.position.x > 13) StartCoroutine(killPlayer(3.0f, 4));
     }
 
     void AxisMovement()
@@ -301,7 +301,7 @@ public class Movement : MonoBehaviour
                 full3 = false;
             }
         }
-        if (full1 || full2 || full3) killPlayer();
+        if (full1 || full2 || full3) StartCoroutine(killPlayer(3.0f, 3));
 
         if (bonification > 1)
         {
@@ -543,8 +543,15 @@ public class Movement : MonoBehaviour
 
         }
 
-    public void killPlayer()
+    public IEnumerator killPlayer(float time, int idxText)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        canvasObject.transform.GetChild(5).gameObject.SetActive(true);
+        canvasObject.transform.GetChild(5).GetChild(idxText).gameObject.SetActive(true);
+        canvasObject.transform.GetChild(5).GetChild(2).GetComponent<Text>().text = canvasObject.transform.GetChild(5).GetChild(idxText).GetComponent<Text>().text;
+        canvasObject.transform.GetChild(5).GetChild(3).GetComponent<Text>().text = canvasObject.transform.GetChild(5).GetChild(idxText).GetComponent<Text>().text;
+        canvasObject.transform.GetChild(5).GetChild(4).GetComponent<Text>().text = canvasObject.transform.GetChild(5).GetChild(idxText).GetComponent<Text>().text;
+        yield return new WaitForSeconds(time);
+
+        loadScreen.Instancia.CargarEscena((SceneManager.GetActiveScene().name));
     }
 }

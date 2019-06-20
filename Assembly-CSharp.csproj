@@ -68,6 +68,7 @@
     <Compile Include="Assets\enemyMovement.cs" />
     <Compile Include="Assets\loadScreen.cs" />
     <Compile Include="Assets\MapMovement.cs" />
+    <Compile Include="Assets\MenuStuff\creditsManager.cs" />
     <Compile Include="Assets\MenuStuff\Menuctrl.cs" />
     <Compile Include="Assets\Movement.cs" />
     <Compile Include="Assets\NeonShapes\SelfDestroyScript.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Assets\SpeedIA.cs" />
     <Compile Include="Assets\SpeedRender.cs" />
     <Compile Include="Assets\splashScreen.cs" />
+    <Compile Include="Assets\trophiesManager.cs" />
     <Compile Include="Assets\turbo.cs" />
     <None Include="Assets\SampleScenes\Shaders\Skybox-Procedural.shader" />
     <Reference Include="UnityEditor.StandardEvents">

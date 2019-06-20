@@ -90,6 +90,7 @@ public class MapMovement : MonoBehaviour {
         {
             Time.timeScale = 0.0f;
             canvas.transform.GetChild(3).gameObject.SetActive(true);
+            GameObject.Find("Canvas").transform.GetChild(6).gameObject.SetActive(false);
         }
         rb.velocity = (mapSpeed);
     }
